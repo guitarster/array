@@ -8,9 +8,10 @@
       let liste = [];
 
       function appendList() {
-        let element = document.getElementById("inputContent").value;
+        const element = document.getElementById("inputContent").value;
         liste.push(element);
         console.log(element);
+        document.getElementById("inputContent").focus();
       }
 
       function showList() {
@@ -18,16 +19,42 @@
       }
 
       function deleteByID() {
-        let element = document.getElementById("deleteID").value;
+        const element = document.getElementById("deleteID").value;
         liste.splice(element, 1);
         console.log(liste);
+        document.getElementById("deleteID").focus();
       }
 
       function deleteByNumber() {
-        let element = document.getElementById("deleteContent").value;
-        const idElement = liste.findIndex();
-        liste.splice(idElement, 1);
+        const element = document.getElementById("deleteContent").value;
+
+        for (i = 0; i < liste.length; i++) {
+          let index = liste.indexOf(element);
+          if (index > -1) {
+            liste.splice(index, 1);
+          } else {
+            break;
+          }
+        }
+
         console.log(liste);
+        document.getElementById("deleteContent").focus();
+      }
+
+      function multiplyList() {
+        ergebnis = 1;
+        for (let i = 0; i < liste.length; i++) {
+          ergebnis *= Number(liste[i]);
+        }
+        console.log(ergebnis);
+      }
+
+      function sumList() {
+        ergebnis = 0;
+        for (let i = 0; i < liste.length; i++) {
+          ergebnis += Number(liste[i]);
+        }
+        console.log(ergebnis);
       }
     </script>
   </head>
@@ -35,20 +62,32 @@
     <div>
       <span>Inhalt einfügen</span>
       <input type="number" id="inputContent" />
-      <button onclick="appendList()">Einfügen</button>
+      <button
+        onclick="appendList(); document.getElementById('inputContent').value = '';"
+      >
+        Einfügen
+      </button>
     </div>
     <div>
       <span>ID löschen</span>
       <input type="number" id="deleteID" />
-      <button onclick="deleteByID()">Löschen</button>
+      <button
+        onclick="deleteByID(); document.getElementById('deleteID').value = ''"
+      >
+        Löschen
+      </button>
     </div>
     <div>
       <span>Content löschen</span>
       <input type="number" id="deleteContent" />
-      <button onclick="deleteByNumber()">Löschen</button>
+      <button
+        onclick="deleteByNumber(); document.getElementById('deleteContent').value = ''"
+      >
+        Löschen
+      </button>
     </div>
     <div><button onclick="showList()">Anzeigen</button></div>
-    <div><button id="multiplyAction">Multiplizieren</button></div>
-    <div><button id="sumAction">Summe</button></div>
+    <div><button onclick="multiplyList()">Multiplizieren</button></div>
+    <div><button onclick="sumList()">Summe</button></div>
   </body>
 </html>
